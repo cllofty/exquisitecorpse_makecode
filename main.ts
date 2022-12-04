@@ -55,6 +55,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         currentCyclingPart = 0
     }
     selectArrow(currentCyclingPart)
+    music.playTone(196, music.beat(BeatFraction.Quarter))
 })
 function setLegImage (legIdx: number) {
     legSprite.setImage(legList[legIdx])
@@ -93,36 +94,36 @@ function setupHeadParts () {
         .......33333333333333333......
         ..........33333333333.........
         `, img`
-        .......666666666666666........
-        .....6666666666666666666......
-        ....666666666666666666666.....
-        ...6666666666666666666666.....
-        ...66666666666666666666666....
-        ..66666666666666666666666666..
-        ..666666666666666666666666666.
-        .66666666666666666666666666666
-        .66666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        666666666666666666666666666666
-        .6666666666666666666666666666.
-        ..666666666666666666666666666.
-        ...66666666666666666666666666.
-        ....666666666666666666666666..
-        .....6666666666666666666666...
-        .......66666666666666666......
-        ..........66666666666.........
+        ............7777..............
+        ..............7777............
+        .............777777...........
+        ..........eeeeeeeeeee.........
+        ........ee44444444444ee.......
+        .......e444444444444444e......
+        ......e44444444444444444e.....
+        .....e4444444444444444444e....
+        ....e4444ee444444444ee4444e...
+        ...e4444effe4444444effe4444e..
+        ...e444effffe44444effffe444e..
+        ..e444eff22ffe444eff22ffe444e.
+        ..e444eff2fffe444efff2ffe444e.
+        ..e4444effffe44444effffe4444e.
+        ..e44444effe4444444effe44444e.
+        ..e444444ee444efe444ee444444e.
+        ..e4444444444efffe4444444444e.
+        ..e4444444444efffe4444444444e.
+        ..e44444444444eee44444444444e.
+        ..e44e444e44444444444e444e44e.
+        ..e4efe4efe444eee444efe4efe4e.
+        ..e4effefffe4efffe4efffeffe4e.
+        ...e4efffeffeffeffeffefffe4e..
+        ...e44eee4efffe4efffe4eee44e..
+        ....e444444efe444efe444444e...
+        .....e444444e44444e444444e....
+        ......e44444444444444444e.....
+        .......e444444444444444e......
+        ........ee44444444444ee.......
+        ..........eeeeeeeeeee.........
         `, assets.image`myImage`]
     currentHeadIdx = 0
     headSprite = sprites.create(img`
@@ -195,6 +196,7 @@ function disableArrow (leftSprite: Sprite, rightSprite: Sprite) {
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     cyclePart(-1)
+    music.playTone(262, music.beat(BeatFraction.Quarter))
 })
 function cycleHeads (direction: number) {
     currentHeadIdx += direction
@@ -215,7 +217,8 @@ function setBodyImage (bodyIdx: number) {
     bodySprite.setPosition(80, 55)
 }
 function setupLegParts () {
-    legList = [img`
+    legList = [
+    img`
         999999999999999999999999999999
         999999999999999999999999999999
         999999999999999999999999999999
@@ -256,7 +259,8 @@ function setupLegParts () {
         9999999999..........9999999999
         9999999999..........9999999999
         9999999999..........9999999999
-        `, img`
+        `,
+    img`
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -297,7 +301,8 @@ function setupLegParts () {
         aaaaaaaaaa..........aaaaaaaaaa
         aaaaaaaaaa..........aaaaaaaaaa
         aaaaaaaaaa..........aaaaaaaaaa
-        `, img`
+        `,
+    img`
         888888888888888888888888888888
         888888888888888888888888888888
         888888888888888888888888888888
@@ -338,7 +343,50 @@ function setupLegParts () {
         ....................8888888888
         ....................8888888888
         ....................8888888888
-        `]
+        `,
+    img`
+        fffffffffff5555555ffffffffffff
+        fffffffffff5fffff5ffffffffffff
+        fffffffffff5fffff5ffffffffffff
+        fffffffffff5555555ffffffffffff
+        .eeeeeeeeeeeeeeeeeeeeeeeeeeee.
+        .eeeeeeeeeeeeeeeeeeeeeeeeeeee.
+        ..eeeeeeeeeeeeeeeeeeeeeeeeee..
+        ..eeeeeeeeeeeeeeeeeeeeeeeeee..
+        ..eeeeeeeeeeeeeeeeeeeeeeeeee..
+        ..eeeeeeeeeeeeeeeeeeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee........eeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..eeeeeeeee.......eeeeeeeeee..
+        ..fffffffff.......ffffffffff..
+        .ffffffffff.......fffffffffff.
+        fffffffffff.......ffffffffffff
+        fffffffffff.......ffffffffffff
+        `
+    ]
     currentLegIdx = 0
     legSprite = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -371,6 +419,7 @@ function cyclePart (direction: number) {
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     cyclePart(1)
+    music.playTone(262, music.beat(BeatFraction.Quarter))
 })
 function selectArrow (idx: number) {
     disableArrow(leftHeadArrow, rightHeadArrow)
@@ -390,6 +439,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         currentCyclingPart = 2
     }
     selectArrow(currentCyclingPart)
+    music.playTone(196, music.beat(BeatFraction.Quarter))
 })
 function setupBodyParts () {
     bodyList = [img`
@@ -629,6 +679,7 @@ let legSprite: Sprite = null
 let legList: Image[] = []
 let currentLegIdx = 0
 let currentCyclingPart = 0
+scene.setBackgroundColor(1)
 currentCyclingPart = 0
 setupHeadParts()
 setupBodyParts()
