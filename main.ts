@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Arrow = SpriteKind.create()
+}
 function cycleLegs (direction: number) {
     currentLegIdx += direction
     if (currentLegIdx >= legList.length) {
@@ -8,14 +11,53 @@ function cycleLegs (direction: number) {
     }
     setLegImage(currentLegIdx)
 }
+function enableArrow (leftSprite: Sprite, rightSprite: Sprite) {
+    leftSprite.setImage(img`
+        ........aaaa............
+        ........ad7a............
+        .......a777a............
+        ......a777da............
+        .....a77d77aaaaaaaaaaaaa
+        ....a77d777777777777777a
+        ...a7dd7777d7d77777ddd7a
+        ..a77777777777777777777a
+        ..a77777777777777777777a
+        ...a7777777777777777777a
+        ....a777777777777777777a
+        .....a77777777777777777a
+        ......a7777aaaaaaaaaaaaa
+        .......a777a............
+        ........a77a............
+        ........aaaa............
+        `)
+    rightSprite.setImage(img`
+        ............aaaa........
+        ............a7da........
+        ............a777a.......
+        ............ad777a......
+        aaaaaaaaaaaaa77d77a.....
+        a777777777777777d77a....
+        a7ddd77777d7d7777dd7a...
+        a77777777777777777777a..
+        a77777777777777777777a..
+        a7777777777777777777a...
+        a777777777777777777a....
+        a77777777777777777a.....
+        aaaaaaaaaaaaa7777a......
+        ............a777a.......
+        ............a77a........
+        ............aaaa........
+        `)
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     currentCyclingPart += -1
     if (currentCyclingPart < 0) {
         currentCyclingPart = 0
     }
+    selectArrow(currentCyclingPart)
 })
 function setLegImage (legIdx: number) {
-    legSprite = sprites.create(legList[legIdx], SpriteKind.Player)
+    legSprite.setImage(legList[legIdx])
     legSprite.setPosition(80, 95)
 }
 function setupHeadParts () {
@@ -83,6 +125,24 @@ function setupHeadParts () {
         ..........66666666666.........
         `, assets.image`myImage`]
     currentHeadIdx = 0
+    headSprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
     setHeadImage(currentHeadIdx)
 }
 function cycleBody (direction: number) {
@@ -94,6 +154,44 @@ function cycleBody (direction: number) {
         currentBodyIdx = bodyList.length - 1
     }
     setBodyImage(currentBodyIdx)
+}
+function disableArrow (leftSprite: Sprite, rightSprite: Sprite) {
+    leftSprite.setImage(img`
+        ........aaaa............
+        ........adba............
+        .......abbba............
+        ......abbbda............
+        .....abbdbbaaaaaaaaaaaaa
+        ....abbdbbbbbbbbbbbbbbba
+        ...abddbbbbdbdbbbbbdddba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ...abbbbbbbbbbbbbbbbbbba
+        ....abbbbbbbbbbbbbbbbbba
+        .....abbbbbbbbbbbbbbbbba
+        ......abbbbaaaaaaaaaaaaa
+        .......abbba............
+        ........abba............
+        ........aaaa............
+        `)
+    rightSprite.setImage(img`
+        ............aaaa........
+        ............abda........
+        ............abbba.......
+        ............adbbba......
+        aaaaaaaaaaaaabbdbba.....
+        abbbbbbbbbbbbbbbdbba....
+        abdddbbbbbdbdbbbbddba...
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbba...
+        abbbbbbbbbbbbbbbbbba....
+        abbbbbbbbbbbbbbbbba.....
+        aaaaaaaaaaaaabbbba......
+        ............abbba.......
+        ............abba........
+        ............aaaa........
+        `)
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     cyclePart(-1)
@@ -108,12 +206,12 @@ function cycleHeads (direction: number) {
     }
     setHeadImage(currentHeadIdx)
 }
-function setHeadImage (headIdx: number) {
-    headSprite = sprites.create(headList[headIdx], SpriteKind.Player)
+function setHeadImage (idx: number) {
+    headSprite.setImage(headList[idx])
     headSprite.setPosition(80, 20)
 }
 function setBodyImage (bodyIdx: number) {
-    bodySprite = sprites.create(bodyList[bodyIdx], SpriteKind.Player)
+    bodySprite.setImage(bodyList[bodyIdx])
     bodySprite.setPosition(80, 55)
 }
 function setupLegParts () {
@@ -242,69 +340,56 @@ function setupLegParts () {
         ....................8888888888
         `]
     currentLegIdx = 0
+    legSprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
     setLegImage(currentLegIdx)
 }
 function cyclePart (direction: number) {
     if (currentCyclingPart == 0) {
-        cycleHeads(1)
+        cycleHeads(direction)
     } else if (currentCyclingPart == 1) {
-        cycleBody(1)
+        cycleBody(direction)
     } else {
-        cycleLegs(1)
+        cycleLegs(direction)
     }
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     cyclePart(1)
 })
-function selectCurrentArrows (cycleIdx: number) {
-    mySprite = sprites.create(img`
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        888888888888888888888888888888
-        88888888888888..88888888888888
-        8888888888888....8888888888888
-        888888888888.....8888888888888
-        888888888888......888888888888
-        8888eee88888......888888888888
-        ....eee...........888888888888
-        ....eee............88888888888
-        ....eee............88888888888
-        ....eee............88888888888
-        ....eee............88888888888
-        ....eee.............8888888888
-        ....eee.............8888888888
-        ....eee.............8888888888
-        ....eee.............8888888888
-        ....eee.............8888888888
-        ....eee.............8888888888
-        ...eeeee...........88888888888
-        ...eeeee...........88888888888
-        ...eeeee...........88888888888
-        ...eeeee...........88888888888
-        ...eeeee...........88888888888
-        ...................88888888888
-        ....................8888888888
-        ....................8888888888
-        ....................8888888888
-        `, SpriteKind.Player)
+function selectArrow (idx: number) {
+    disableArrow(leftHeadArrow, rightHeadArrow)
+    disableArrow(leftBodyArrow, rightBodyArrow)
+    disableArrow(leftLegArrow, rightLegArrow)
+    if (idx == 0) {
+        enableArrow(leftHeadArrow, rightHeadArrow)
+    } else if (idx == 1) {
+        enableArrow(leftBodyArrow, rightBodyArrow)
+    } else {
+        enableArrow(leftLegArrow, rightLegArrow)
+    }
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     currentCyclingPart += 1
     if (currentCyclingPart > 2) {
         currentCyclingPart = 2
     }
+    selectArrow(currentCyclingPart)
 })
 function setupBodyParts () {
     bodyList = [img`
@@ -391,13 +476,153 @@ function setupBodyParts () {
         ..........999999999999999999999999999999..........
         `, assets.image`myImage0`]
     currentBodyIdx = 0
+    bodySprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
     setBodyImage(currentBodyIdx)
 }
-let mySprite: Sprite = null
+function positionArrows (leftSprite: Sprite, lx: number, ly: number, rightSprite: Sprite, rx: number, ry: number) {
+    leftSprite.setPosition(lx, ly)
+    rightSprite.setPosition(rx, ry)
+}
+function initArrows () {
+    leftHeadArrow = sprites.create(img`
+        ........aaaa............
+        ........adba............
+        .......abbba............
+        ......abbbda............
+        .....abbdbbaaaaaaaaaaaaa
+        ....abbdbbbbbbbbbbbbbbba
+        ...abddbbbbdbdbbbbbdddba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ...abbbbbbbbbbbbbbbbbbba
+        ....abbbbbbbbbbbbbbbbbba
+        .....abbbbbbbbbbbbbbbbba
+        ......abbbbaaaaaaaaaaaaa
+        .......abbba............
+        ........abba............
+        ........aaaa............
+        `, SpriteKind.Arrow)
+    rightHeadArrow = sprites.create(img`
+        ............aaaa........
+        ............abda........
+        ............abbba.......
+        ............adbbba......
+        aaaaaaaaaaaaabbdbba.....
+        abbbbbbbbbbbbbbbdbba....
+        abdddbbbbbdbdbbbbddba...
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbba...
+        abbbbbbbbbbbbbbbbbba....
+        abbbbbbbbbbbbbbbbba.....
+        aaaaaaaaaaaaabbbba......
+        ............abbba.......
+        ............abba........
+        ............aaaa........
+        `, SpriteKind.Arrow)
+    positionArrows(leftHeadArrow, 30, 20, rightHeadArrow, 130, 20)
+    leftBodyArrow = sprites.create(img`
+        ........aaaa............
+        ........adba............
+        .......abbba............
+        ......abbbda............
+        .....abbdbbaaaaaaaaaaaaa
+        ....abbdbbbbbbbbbbbbbbba
+        ...abddbbbbdbdbbbbbdddba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ...abbbbbbbbbbbbbbbbbbba
+        ....abbbbbbbbbbbbbbbbbba
+        .....abbbbbbbbbbbbbbbbba
+        ......abbbbaaaaaaaaaaaaa
+        .......abbba............
+        ........abba............
+        ........aaaa............
+        `, SpriteKind.Arrow)
+    rightBodyArrow = sprites.create(img`
+        ............aaaa........
+        ............abda........
+        ............abbba.......
+        ............adbbba......
+        aaaaaaaaaaaaabbdbba.....
+        abbbbbbbbbbbbbbbdbba....
+        abdddbbbbbdbdbbbbddba...
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbba...
+        abbbbbbbbbbbbbbbbbba....
+        abbbbbbbbbbbbbbbbba.....
+        aaaaaaaaaaaaabbbba......
+        ............abbba.......
+        ............abba........
+        ............aaaa........
+        `, SpriteKind.Arrow)
+    positionArrows(leftBodyArrow, 30, 60, rightBodyArrow, 130, 60)
+    leftLegArrow = sprites.create(img`
+        ........aaaa............
+        ........adba............
+        .......abbba............
+        ......abbbda............
+        .....abbdbbaaaaaaaaaaaaa
+        ....abbdbbbbbbbbbbbbbbba
+        ...abddbbbbdbdbbbbbdddba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ..abbbbbbbbbbbbbbbbbbbba
+        ...abbbbbbbbbbbbbbbbbbba
+        ....abbbbbbbbbbbbbbbbbba
+        .....abbbbbbbbbbbbbbbbba
+        ......abbbbaaaaaaaaaaaaa
+        .......abbba............
+        ........abba............
+        ........aaaa............
+        `, SpriteKind.Arrow)
+    rightLegArrow = sprites.create(img`
+        ............aaaa........
+        ............abda........
+        ............abbba.......
+        ............adbbba......
+        aaaaaaaaaaaaabbdbba.....
+        abbbbbbbbbbbbbbbdbba....
+        abdddbbbbbdbdbbbbddba...
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbbba..
+        abbbbbbbbbbbbbbbbbbba...
+        abbbbbbbbbbbbbbbbbba....
+        abbbbbbbbbbbbbbbbba.....
+        aaaaaaaaaaaaabbbba......
+        ............abbba.......
+        ............abba........
+        ............aaaa........
+        `, SpriteKind.Arrow)
+    positionArrows(leftLegArrow, 30, 100, rightLegArrow, 130, 100)
+}
+let rightLegArrow: Sprite = null
+let leftLegArrow: Sprite = null
+let rightBodyArrow: Sprite = null
+let leftBodyArrow: Sprite = null
+let rightHeadArrow: Sprite = null
+let leftHeadArrow: Sprite = null
 let bodySprite: Sprite = null
-let headSprite: Sprite = null
 let bodyList: Image[] = []
 let currentBodyIdx = 0
+let headSprite: Sprite = null
 let currentHeadIdx = 0
 let headList: Image[] = []
 let legSprite: Sprite = null
@@ -408,3 +633,5 @@ currentCyclingPart = 0
 setupHeadParts()
 setupBodyParts()
 setupLegParts()
+initArrows()
+selectArrow(currentCyclingPart)
